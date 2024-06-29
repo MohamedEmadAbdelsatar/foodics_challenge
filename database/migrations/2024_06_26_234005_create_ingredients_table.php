@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedInteger('current_stock');
             $table->foreignId('merchant_id')->constrained();
             $table->boolean('is_merchant_notified');
-            $table->unsignedInteger('unit_id');
+            $table->foreignId('unit_id')->constrained('units');
             $table->timestamps();
         });
     }
