@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedInteger('full_stock');
             $table->unsignedInteger('current_stock');
             $table->foreignId('merchant_id')->constrained();
-            $table->boolean('is_merchant_notified');
+            $table->boolean('is_merchant_notified')->default(false);
             $table->foreignId('unit_id')->constrained('units');
             $table->timestamps();
         });

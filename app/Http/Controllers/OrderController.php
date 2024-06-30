@@ -12,5 +12,6 @@ class OrderController extends Controller
     }
     public function store(OrderRequest $request)
     {
+        $order = $this->orderService->store($request->products);
     }
 }

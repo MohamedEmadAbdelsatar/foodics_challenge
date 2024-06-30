@@ -12,6 +12,8 @@ class Order extends Model
     protected $fillable = ['user_id', 'status'];
 
     CONST PENDINGSTATUS = 'pending';
+    CONST REJECTEDSTATUS = 'rejected';
+    CONST CONFIRMEDSTATUS = 'confirmed';
     CONST PREPARINGSTATUS = 'preparing';
     CONST DELIVERINGSTATUS = 'delivering';
     CONST DELIVEREDSTATUS = 'delivered';

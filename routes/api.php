@@ -7,4 +7,4 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::post('orders', [\App\Http\Controllers\OrderController::class, 'store']);
+Route::post('/orders', [\App\Http\Controllers\OrderController::class, 'store']);

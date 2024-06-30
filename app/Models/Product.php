@@ -11,8 +11,10 @@ class Product extends Model
 
     protected $fillable = ['name'];
 
-    public function ingredients(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function ingredients()
     {
-        return $this->belongsToMany(Ingredient::class)->withPivot('quantity');
+        return $this->belongsToMany(Ingredient::class, 'product_ingredients', 'product_id', 'ingredient_id')
+            ->withPivot('quantity');
     }
+
 }
