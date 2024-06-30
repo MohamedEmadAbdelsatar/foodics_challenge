@@ -1,25 +1,20 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Services;
 
-use App\Http\Repositories\OrderRepository;
-use App\Http\Repositories\ProductIngredientRepository;
 use App\Models\Order;
-use App\Models\Product;
+use App\Repositories\OrderRepository;
+use App\Repositories\ProductIngredientRepository;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;
 
 class IngredientService
 {
-    private ProductIngredientRepository $productIngredientRepository;
-    private OrderRepository $orderRepository;
     public function __construct(
-        ProductIngredientRepository $productIngredientRepository,
-        OrderRepository $orderRepository,
+        protected ProductIngredientRepository $productIngredientRepository,
+        protected OrderRepository $orderRepository,
     )
     {
-        $this->productIngredientRepository = $productIngredientRepository;
-        $this->orderRepository = $orderRepository;
     }
     public function updateStock(array $requestProducts, $order): void
     {

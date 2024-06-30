@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Repositories;
+namespace App\Repositories;
 
 use App\Models\Product;
 
@@ -11,7 +11,7 @@ class ProductIngredientRepository
         return Product::query()->findOrFail($productId);
     }
 
-    public function update($model, $column, $value)
+    public function update($model, $column, $value): void
     {
         $model->update([$column => $value]);
     }

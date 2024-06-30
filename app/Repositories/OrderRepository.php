@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Repositories;
+namespace App\Repositories;
 
 use App\Models\Order;
 
@@ -11,15 +11,13 @@ class OrderRepository
         return Order::query()->create(['user_id' => $userId, 'status' => Order::PENDINGSTATUS]);
     }
 
-    public function attach($order, array $products): \Illuminate\Database\Eloquent\Builder
+    public function attach($order, array $products): void
     {
         $order->products()->attach($products);
-
-        return $order->with('products', 'user');
     }
 
     public function updateOrder($order, $column, $value)
     {
-        $order->query()->update([$column => $value]);
+        return $order->query()->updateOrCreate(['id' => $order->id], [$column => $value]);
     }
 }

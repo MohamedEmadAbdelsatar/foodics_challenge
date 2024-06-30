@@ -2,9 +2,9 @@
 
 namespace App\Observers;
 
-use App\Http\Repositories\ProductIngredientRepository;
 use App\Mail\NotifyMerchantLowStock;
 use App\Models\Ingredient;
+use App\Repositories\ProductIngredientRepository;
 use Illuminate\Support\Facades\Mail;
 
 class IngredientObserver
@@ -14,11 +14,11 @@ class IngredientObserver
     {
         $this->productIngredientRepository = $productIngredientRepository;
     }
-    public function updated(Ingredient $ingredient)
+    public function updated(Ingredient $ingredient): void
     {
-        if ($ingredient->isDirty('current_stock') && $ingredient->current_stock < $ingredient->full_stock / 2 && !$ingredient->is_merchant_notified) {
+        if ($ingredient->isDirty('current_stock') && $ingredient->current_stock < ($ingredient->full_stock / 2) && !$ingredient->is_merchant_notified) {
             $ingredient->load('merchant', 'unit');
-            Mail::to(['email' => $ingredient->merchant->email, 'name' => $ingredient->merchant->name])->send(new NotifyMerchantLowStock($ingredient));
+            Mail::to($ingredient->merchant->email)->send(new NotifyMerchantLowStock($ingredient));
 
             $this->productIngredientRepository->update($ingredient, 'is_merchant_notified', true);
         }

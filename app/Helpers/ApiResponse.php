@@ -6,16 +6,15 @@ use Illuminate\Support\Facades\Facade;
 
 class ApiResponse extends Facade
 {
-    public function success($code = 200, $data = [], $message = 'Successful', $statusMessage = null)
+    public function success($code = 200, $data = [], $message = 'Successful'): \Illuminate\Http\JsonResponse
     {
         return response()->json([
-            'status' => $statusMessage || '',
             'data' => $data,
             'message' => $message,
         ], $code);
     }
 
-    public function error($code = 400, $errors = [], $message = '')
+    public function error($code = 400, $errors = [], $message = ''): \Illuminate\Http\JsonResponse
     {
         return response()->json([
             'message' => $message,
