@@ -15,7 +15,7 @@ class OrderRepository
     {
         $order->products()->attach($products);
 
-        return $order->with('products');
+        return $order->with('products', 'user');
     }
 
     public function updateOrder($order, $column, $value)
