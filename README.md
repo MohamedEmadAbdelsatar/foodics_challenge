@@ -3,31 +3,31 @@
 ## Installation
 
 1. Clone the Repository
-    ```
+    ```sh
     git clone git@github.com:MohamedEmadAbdelsatar/foodics_challenge.git
     cd foodics_challenge
     ```
 2. install project note*: php version is 8.3 and laravel version is 11.
-    ```
+    ```sh
    composer install
    ```
 3. create .env and copy the content of .env.example into .env
 4. run database migration command note*: 
-    ```
+    ```sh
    php artisan migrate
    ```
 5. run database seeder
-    ```
+    ```sh
    php artisan db:seed
    ```
 6. start the App
-    ```
+    ```sh
    php artisan serve
    ```
 7. register a user, login then you can create your order.
 I also shared a postman collection [here](https://documenter.getpostman.com/view/7845030/2sA3duHDwC)
 8. to run the test cases
-    ```
+    ```sh
     php artisan test
     ```
 ## Database Schema design
@@ -40,7 +40,7 @@ Let's start with the User table it is only related to orders table (one to many)
 before making an order we should have a user,
 1. `AuthController` is responsible to registering a new user also login.
 2. use the token created to trigger the `api/orders` endpoint, the request should follow the format.
-```
+```json
 {
     "products": [
         {
@@ -52,7 +52,9 @@ before making an order we should have a user,
 ```
 3. after validation, request data is passed to `OrderService` which creates the order, pass the inputs to `IngredientService` to check the quantities and update the stock.
 4. then attach the products to the order model.
-5. during updating the stock `IngredientObserver` will be triggered it check if the `current_stock` is lower than `full_stock` and `is_merchant_notified` is false the Mail `NotifyMerchantLowStock` will be triggered and will notify the merchant.
+5. we also use `DB::transaction()` to roll back the operation if an error happens
+7. we use Repositories to separate database related operations from other App logic. note* we could use interface if used with multiple classes
+8. during updating the stock `IngredientObserver` will be triggered it check if the `current_stock` is lower than half `full_stock` and `is_merchant_notified` is false the Mail `NotifyMerchantLowStock` will be triggered and will notify the merchant.
 
 
 
